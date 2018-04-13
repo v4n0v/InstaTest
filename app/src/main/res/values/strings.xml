@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">InstaTest</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_register">Регистрация</string>
+    <string name="main">Главная</string>
+    <string name="enter_name">Введите имя</string>
+    <string name="enter_email">Ваш email</string>
+    <string name="enter_phone">Ваш номер телефона</string>
+    <string name="title_activity_tabs">TabsActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="fab_custom"> com.example.v4n0v.instatest.custom.FABCustomBehavior</string>
+    <string name="favorites">Избранное</string>
+    <string name="feed">Лента</string>
+
+
+</resources>

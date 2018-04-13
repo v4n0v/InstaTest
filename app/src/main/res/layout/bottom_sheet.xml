@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="500dp"
+android:background="@color/colorWhite"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="50dp"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+    <TextView
+        android:id="@+id/bottom_header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:text="Потяни вверх"
+        android:textColor="@color/colorWhite" />
+
+    <!--<TextView-->
+    <!--android:id="@+id/bottom_header2"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:layout_below="@+id/bottom_header"-->
+    <!--android:background="@color/colorPrimary"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/bottom_body_header"-->
+    <!--android:textColor="@color/colorWhite" />-->
+
+    <LinearLayout
+        android:layout_below="@+id/bottom_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"  />
+
+    </LinearLayout>
+    <!--тут будет выбор марки\модели\поколения авто, осталось определиться с представлением-->
+
+    <Button
+        style="@style/BlackButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:onClick="save"
+        android:text="Жми меня"
+        android:textColor="@color/colorWhite" />
+</RelativeLayout>
