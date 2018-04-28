@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.v4n0v.instatest.TabsActivity">
+    tools:context=".mvp.view.activity.TabsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

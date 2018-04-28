@@ -1,0 +1,6 @@
+<resources>
+    <declare-styleable name="TextViewPlus">
+        <attr name="customFont" format="string"/>
+    </declare-styleable>
+
+</resources>
