@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity
         fragmentFavorites = FragmentFavorites.newInstance(null);
         fragmentFeed = FragmentFeed.newInstance(null);
         App.getInstance().getAppComponent().inject(fragmentFeed);
+        App.getInstance().getAppComponent().inject(fragmentFavorites);
         customFragmentPA.addFragment(fragmentFeed, "Лента");
         customFragmentPA.addFragment(fragmentFavorites, "Избранное");
 

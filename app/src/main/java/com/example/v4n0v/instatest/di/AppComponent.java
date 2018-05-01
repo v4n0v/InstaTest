@@ -6,6 +6,7 @@ import com.example.v4n0v.instatest.di.modules.ImageModule;
 import com.example.v4n0v.instatest.di.modules.RepoModule;
 import com.example.v4n0v.instatest.mvp.model.recycler_adapter.RecyclerImagesAdapter;
 import com.example.v4n0v.instatest.mvp.presenters.FeedPresenter;
+import com.example.v4n0v.instatest.mvp.view.fragments.FragmentFavorites;
 import com.example.v4n0v.instatest.mvp.view.fragments.FragmentFeed;
 
 import javax.inject.Singleton;
@@ -17,6 +18,7 @@ import dagger.Component;
 public interface AppComponent {
 
     void inject(FragmentFeed fragmentFeed);
+    void inject(FragmentFavorites fragmentFavorites);
     void inject(FeedPresenter feedPresenter);
 
 }

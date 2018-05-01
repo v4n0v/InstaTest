@@ -10,6 +10,8 @@ import com.example.v4n0v.instatest.mvp.model.entity.json.Instagram;
 import com.example.v4n0v.instatest.mvp.model.recycler_adapter.IListImageRaw;
 import com.example.v4n0v.instatest.mvp.model.recycler_adapter.IListPresenter;
 import com.example.v4n0v.instatest.mvp.model.repo.InstagramRepo;
+import com.example.v4n0v.instatest.mvp.model.repo.cache.IFavoritesCache;
+import com.example.v4n0v.instatest.mvp.model.repo.cache.PaperFavoritesCache;
 import com.example.v4n0v.instatest.mvp.view.MainView;
 import com.example.v4n0v.instatest.mvp.view.fragments.Photo;
 
@@ -41,7 +43,7 @@ public class FeedPresenter extends MvpPresenter<MainView> {
         handler = new AppOkHandler();
     }
 
-
+    private IFavoritesCache favoritesCache = new PaperFavoritesCache();
     public ListPresenter getListPresenter() {
         return listPresenter;
     }
@@ -64,10 +66,13 @@ public class FeedPresenter extends MvpPresenter<MainView> {
 
         @Override
         public void selectItem(int pos) {
-            if (items.get(pos).isFavorite())
+            if (items.get(pos).isFavorite()) {
                 items.get(pos).setFavorite(false);
-            else
+               favoritesCache.removeFromFavorives(items.get(pos));
+            }else {
                 items.get(pos).setFavorite(true);
+               favoritesCache.writeToFavorives(items.get(pos));
+            }
             getViewState().updateRecycler();
 //            Weather weather = items.get(pos);
 //            getViewState().toast("Loading "+weather.getCity()+" weather");
