@@ -1,5 +1,7 @@
 package com.example.v4n0v.instatest.images;
 
+import android.graphics.Bitmap;
+
 import java.io.File;
 
 /**
@@ -7,6 +9,6 @@ import java.io.File;
  */
 
 public interface ImageCache {
-    void saveImage(String url, File file);
+    void saveImage(String url,  Bitmap bitmap);
     File loadImage(String url);
 }

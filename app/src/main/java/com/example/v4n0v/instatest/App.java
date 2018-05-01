@@ -7,6 +7,7 @@ import com.example.v4n0v.instatest.di.DaggerAppComponent;
 import com.example.v4n0v.instatest.di.modules.AppModule;
 
 import io.paperdb.Paper;
+import io.realm.Realm;
 import timber.log.Timber;
 
 
@@ -25,6 +26,7 @@ public class App extends Application {
         app = this;
         Timber.plant(new Timber.DebugTree());
         Paper.init(this);
+        Realm.init(this);
         appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
     }
 
