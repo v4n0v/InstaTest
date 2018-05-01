@@ -74,6 +74,7 @@
             android:background="@color/colorAccent"
             android:src="@drawable/ic_add_fab"
             app:layout_anchor="@+id/bottom_sheet"
+            app:layout_behavior="com.example.v4n0v.instatest.custom.FABCustomBehavior"
             app:layout_anchorGravity="top|end" />
     </android.support.design.widget.CoordinatorLayout>
 
