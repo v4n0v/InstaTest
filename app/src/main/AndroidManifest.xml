@@ -15,18 +15,16 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".mvp.view.activity.MainActivity"
-            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".mvp.view.activity.RegisterActivity" />
-        <activity
-            android:name=".mvp.view.activity.TabsActivity"
-            android:label="@string/title_activity_tabs"
-            android:theme="@style/AppTheme.NoActionBar">
+
+        <activity android:name=".SplashActivity">
 
 
         </activity>

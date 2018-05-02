@@ -1,45 +1,62 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:foo="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content">
 
-    android:orientation="vertical">
+    <include layout="@layout/bottom_sheet" />
 
-    <RelativeLayout
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:background="@color/colorAccent"
+        android:src="@drawable/ic_add_fab"
+        app:layout_anchor="@+id/bottom_sheet"
+        app:layout_anchorGravity="top|end"
+        app:layout_behavior="com.example.v4n0v.instatest.custom.BottomCustom" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/lil_margin">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        android:orientation="vertical">
 
-            android:id="@+id/iv_avatar"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_menu_gallery"
-            app:civ_border_color="@color/colorAccent"
-            app:civ_border_width="2dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/lil_margin">
 
-        <!--<LinearLayout-->
+            <de.hdodenhof.circleimageview.CircleImageView
+
+                android:id="@+id/iv_avatar"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_menu_gallery"
+                app:civ_border_color="@color/colorAccent"
+                app:civ_border_width="2dp" />
+
+            <!--<LinearLayout-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:orientation="vertical"-->
             <!--android:layout_marginLeft="@dimen/std_margin">-->
 
-        <com.example.v4n0v.instatest.custom.TextViewPlus
-            foo:customFont="roboto-bold.ttf"
-            android:id="@+id/tv_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            <com.example.v4n0v.instatest.custom.TextViewPlus
+                android:id="@+id/tv_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
 
-            android:layout_marginLeft="@dimen/std_margin"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/iv_avatar"
-            android:textSize="16sp"
+                android:layout_marginStart="@dimen/std_margin"
+                android:layout_toEndOf="@id/iv_avatar"
+                android:textSize="16sp"
+                foo:customFont="roboto-bold.ttf"
 
 
-            />
+                />
 
             <!--<LinearLayout-->
             <!--android:layout_width="match_parent"-->
@@ -109,24 +126,23 @@
             <!--</LinearLayout>-->
 
 
-        <!--</LinearLayout>-->
+            <!--</LinearLayout>-->
 
-    </RelativeLayout>
+        </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:src="@drawable/border" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:src="@drawable/border" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_feed"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_feed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
-</LinearLayout>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

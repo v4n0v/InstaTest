@@ -41,7 +41,7 @@ public class FragmentFavorites extends MvpAppCompatFragment implements Favorites
 
     RecyclerImagesAdapter adapter;
     View view;
-    List<Photo> photoList;
+
 
     @InjectPresenter
     FavoritesPresenter presenter;
@@ -55,23 +55,17 @@ public class FragmentFavorites extends MvpAppCompatFragment implements Favorites
         view = inflater.inflate(R.layout.fragment_favorites, container, false);
         ButterKnife.bind(this, view);
 
-         presenter.init();
+        presenter.init();
 
-        photoList = new ArrayList<>();
-        int imgId = R.drawable.foto;
-        Photo photo1 = new Photo("sasasdasd", imgId);
-        Photo photo2 = new Photo("sasasdsdasdasd", imgId);
-        Photo photo3 = new Photo("hgntydbfg", imgId);
-        photoList.add(photo1);
-        photoList.add(photo2);
-        photoList.add(photo3);
 
-        initViews();
-        //   addItem();
         return view;
     }
 
-    private void initViews() {
+
+
+
+    @Override
+    public void init() {
 
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
@@ -80,10 +74,7 @@ public class FragmentFavorites extends MvpAppCompatFragment implements Favorites
 
         recyclerView.setAdapter(adapter);
 
-
-
     }
-
 
     @Override
     public void updateRecycler() {

@@ -14,7 +14,6 @@ import android.view.View;
 
 public class FABCustomBehavior extends FloatingActionButton.Behavior{
 
-    final private String TAG = "FAB_CUSTOM";
 
     public FABCustomBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -24,7 +23,7 @@ public class FABCustomBehavior extends FloatingActionButton.Behavior{
     @Override
     public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull FloatingActionButton child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
 
-        Log.d(TAG, "onNested");
+      //  Log.d(TAG, "onNested");
 //        if (child.getVisibility() == View.VISIBLE && dyConsumed > 0) {
 //            child.hide();
 //        } else if (child.getVisibility() == View.GONE && dyConsumed < 0) {
@@ -66,7 +65,7 @@ public class FABCustomBehavior extends FloatingActionButton.Behavior{
 
 
 
-        Log.d(TAG, "onStartNested");
+   //     Log.d(TAG, "onStartNested");
 
        // child.animate().translationX(250).scaleX(0).scaleY(0).setDuration(300).start();
 

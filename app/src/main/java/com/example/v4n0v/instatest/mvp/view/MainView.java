@@ -9,10 +9,13 @@ import java.util.List;
 
 @StateStrategyType(AddToEndSingleStrategy.class)
 public interface MainView extends MvpView {
-    void applyPhotoFeed(List<Photo> photos);
+
+    void init();
+
+
 
     void fillUserInfo(String username);
-    void getAvatar(String url);
+    void loadAvatar(String url);
 
     void updateRecycler();
 }

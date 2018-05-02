@@ -7,7 +7,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by v4n0v on 28.04.18.
+ * Модуль репозиториев InstagramRepo
  */
 @Module(includes = ApiModule.class)
 public class RepoModule {
@@ -16,5 +16,4 @@ public class RepoModule {
     public InstagramRepo instagramRepo(ApiService apiService){
         return new InstagramRepo(apiService);
     }
-
 }

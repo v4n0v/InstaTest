@@ -1,8 +1,9 @@
 package com.example.v4n0v.instatest.mvp.presenters;
 
+import android.annotation.SuppressLint;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.example.v4n0v.instatest.R;
 import com.example.v4n0v.instatest.mvp.model.ImagesModel;
 import com.example.v4n0v.instatest.mvp.model.api.okhttp.AppOkHandler;
 import com.example.v4n0v.instatest.mvp.model.entity.json.Datum;
@@ -31,8 +32,8 @@ public class FeedPresenter extends MvpPresenter<MainView> {
     private final Scheduler scheduler;
     private ArrayList<Photo> photoList;
     private AppOkHandler handler;
-    Instagram instagram;
-    ImagesModel model;
+    private Instagram instagram;
+    private ImagesModel model;
 
     @Inject
     InstagramRepo repo;
@@ -49,6 +50,7 @@ public class FeedPresenter extends MvpPresenter<MainView> {
     }
 
     private ListPresenter listPresenter = new ListPresenter();
+
 
 
     class ListPresenter implements IListPresenter {
@@ -74,9 +76,6 @@ public class FeedPresenter extends MvpPresenter<MainView> {
                favoritesCache.writeToFavorives(items.get(pos));
             }
             getViewState().updateRecycler();
-//            Weather weather = items.get(pos);
-//            getViewState().toast("Loading "+weather.getCity()+" weather");
-//            ChangeCityBus.getBus().post(weather.getCity());
 
         }
     }
@@ -85,26 +84,27 @@ public class FeedPresenter extends MvpPresenter<MainView> {
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
+        getViewState().init();
     }
 
+    @SuppressLint("CheckResult")
     public void getImages() {
 
-        repo.getData(TOKEN).subscribeOn(Schedulers.io())
+        repo.getData(TOKEN)
+                .observeOn(scheduler)
                 .subscribe(inst -> {
-                    instagram = inst;
-                    steUserInfo(inst.getData().get(0).getUser().getUsername());
-                    String avaLink = inst.getData().get(0).getUser().getProfilePicture();
-                    getViewState().getAvatar(avaLink);
-                    model.saveImages(inst)
-                           .subscribe(boo -> {
-                                Timber.d("Image extracting complete");
+                    this.instagram = inst;
+                    getViewState().fillUserInfo(inst.getData().get(0).getUser().getUsername());
+                    getViewState().loadAvatar(inst.getData().get(0).getUser().getProfilePicture());
+//                    model.saveImages(inst)
+//                           .subscribe(boo -> {
+//                                Timber.d("Image extracting complete");
+//
+//                            });
 
-                            });
-                    //model.saveImages(inst);
-                    //   Timber.d(answer);
-                    listPresenter.items=inst.getData();
+                    listPresenter.items= this.instagram .getData();
                     getViewState().updateRecycler();
-                    Timber.d(avaLink);
+
                 });
 
 //        handler.getSelf().subscribeOn(Schedulers.io())
@@ -119,15 +119,6 @@ public class FeedPresenter extends MvpPresenter<MainView> {
 //                });
 
 
-        photoList = new ArrayList<>();
-        int imgId = R.drawable.foto;
-        Photo photo1 = new Photo("sasasdasd", imgId);
-        Photo photo2 = new Photo("sasasdsdasdasd", imgId);
-        Photo photo3 = new Photo("hgntydbfg", imgId);
-        photoList.add(photo1);
-        photoList.add(photo2);
-        photoList.add(photo3);
-        getViewState().applyPhotoFeed(photoList);
     }
 
     private void steUserInfo(String username) {

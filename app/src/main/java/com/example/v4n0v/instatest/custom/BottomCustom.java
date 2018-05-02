@@ -24,14 +24,14 @@ public class BottomCustom extends BottomSheetBehavior {
 
     @Override
     public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
-        Log.d("TAG", "dyConsumed = " + dyConsumed);
-        if (dyConsumed != 0) {
+        if (dyConsumed >0 ) {
 
             child.animate().translationY(250).setDuration(300).start();
 
         } else {
 
             child.animate().translationY(0).setDuration(300).start();
+            setState(BottomSheetBehavior.STATE_COLLAPSED);
 
         }
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);

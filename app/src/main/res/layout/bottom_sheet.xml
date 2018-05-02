@@ -5,9 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="500dp"
     android:background="@color/colorWhite"
-    android:elevation="5dp"
     app:behavior_hideable="true"
     app:behavior_peekHeight="50dp"
+    android:elevation="5dp"
+
     app:layout_behavior="com.example.v4n0v.instatest.custom.BottomCustom">
 
     <TextView
@@ -16,7 +17,7 @@
         android:layout_height="50dp"
         android:background="@color/colorPrimaryDark"
         android:gravity="center"
-        android:text="Потяни вверх"
+        android:text="@string/swipe_up"
 
         android:textColor="@color/colorWhite" />
 
@@ -51,6 +52,6 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:onClick="save"
-        android:text="Жми меня"
+        android:text="@string/tap_on_me"
         android:textColor="@color/colorWhite" />
 </RelativeLayout>

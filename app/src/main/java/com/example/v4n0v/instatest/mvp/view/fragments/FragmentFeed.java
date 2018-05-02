@@ -1,7 +1,10 @@
 package com.example.v4n0v.instatest.mvp.view.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,7 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class FragmentFeed extends MvpAppCompatFragment implements MainView{
+public class FragmentFeed extends MvpAppCompatFragment implements MainView {
 
     @InjectPresenter
     FeedPresenter presenter;
@@ -42,6 +45,11 @@ public class FragmentFeed extends MvpAppCompatFragment implements MainView{
     @BindView(R.id.tv_username)
     TextView usernameTextView;
 
+    @BindView(R.id.bottom_sheet)
+    View bottomView;
+    private BottomSheetBehavior<View> sheetBehavior;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 //    @BindView(R.id.tv_posts)
 //    TextView postsTextView;
 //
@@ -55,7 +63,7 @@ public class FragmentFeed extends MvpAppCompatFragment implements MainView{
     ImageLoader imageLoader;
 
     @ProvidePresenter
-    public FeedPresenter provideMainPresenter(){
+    public FeedPresenter provideMainPresenter() {
         return new FeedPresenter(AndroidSchedulers.mainThread());
     }
 
@@ -72,14 +80,13 @@ public class FragmentFeed extends MvpAppCompatFragment implements MainView{
     RecyclerView recyclerView;
     private RecyclerImagesAdapter adapter;
 
-    private List<Photo> photoList;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
         ButterKnife.bind(this, view);
-        initViews();
+
         App.getInstance().getAppComponent().inject(presenter);
         presenter.getImages();
 
@@ -88,9 +95,8 @@ public class FragmentFeed extends MvpAppCompatFragment implements MainView{
     }
 
 
-
     private void initViews() {
-        photoList=new ArrayList<>();
+
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -100,10 +106,38 @@ public class FragmentFeed extends MvpAppCompatFragment implements MainView{
     }
 
     @Override
-    public void applyPhotoFeed(List<Photo> photos) {
-        photoList=photos;
-        adapter.notifyDataSetChanged();
+    public void init() {
+        initBottom();
+        initViews();
     }
+
+
+    void initBottom() {
+        sheetBehavior = BottomSheetBehavior.from(bottomView);
+        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                // этот код скрывает кнопку сразу же
+// и отображает после того как нижний экран полностью свернется
+                if (BottomSheetBehavior.STATE_DRAGGING == newState) {
+                    fab.animate().scaleX(0).scaleY(0).setDuration(300).start();
+                } else if (BottomSheetBehavior.STATE_COLLAPSED == newState) {
+
+                    fab.animate().scaleX(1).scaleY(1).setDuration(300).start();
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                // fab.animate().scaleX(1 - slideOffset).scaleY(1 - slideOffset).setDuration(0).start();
+            }
+
+        });
+
+    }
+
 
     @Override
     public void fillUserInfo(String username) {
@@ -115,7 +149,7 @@ public class FragmentFeed extends MvpAppCompatFragment implements MainView{
     }
 
     @Override
-    public void getAvatar(String url) {
+    public void loadAvatar(String url) {
         imageLoader.loadInto(url, avatarImageView);
     }
 
