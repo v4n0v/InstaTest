@@ -80,42 +80,29 @@ public class RecyclerImagesAdapter extends RecyclerView.Adapter<RecyclerImagesAd
             commentsCountTextView.setText(String.valueOf(data.getComments().getCount()));
             int id;
             if (data.isFavorite()) {
-                //   favImageView.setImageDrawable();
-
                 id = R.drawable.ic_bookmark_24dp;
             } else {
                 id = R.drawable.ic_bookmark_border_24dp;
-
             }
 
             favImageView.setImageResource(id);
 
         }
 
-//        @Override
-//        public void setWeather(Weather weather) {
-//            String pressureInfo = weather.getPressure() + root.getResources().getString(R.string.pressure_dim);
-//            String windInfo = weather.getWind() + root.getResources().getString(R.string.wind_dim);
-//            String humInfo = weather.getHumidity() + root.getResources().getString(R.string.humidity_dim);
-//
-//            cityTV.setText(weather.getCity());
-//            tempTV.setText(weatherDecorator.temperatureFormat(weather.getTemperature()));//  getString(R.string.cels));
-//            pressureTV.setText(pressureInfo);
-//            humidityTV.setText(humInfo);
-//            windTV.setText(windInfo);
-//            timeTV.setText(weatherDecorator.getLastUpdate(weather.getTime()));
-//            int weatherIcon = weatherDecorator.getWeatherIcon(weather.getId());
-//            Drawable drawable = ResourcesCompat.getDrawable(root.getContext().getResources(), weatherIcon, null);
-//
-//            img.setImageDrawable(drawable);
-//        }
-
 
         @Override
         public void onClick(View view) {
-            int pos = getLayoutPosition();
-            Timber.d("click " + pos);
-            presenter.selectItem(pos);
+            int id = view.getId();
+            switch (id) {
+                case R.id.item_fav_added:
+                    int pos = getLayoutPosition();
+                    Timber.d("click " + pos);
+                    presenter.selectItem(pos);
+                    break;
+                default:
+                    break;
+            }
+
         }
     }
 }

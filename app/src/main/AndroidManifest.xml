@@ -22,12 +22,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.view.activity.RegisterActivity" />
+        <activity android:name=".mvp.view.activity.RegisterActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".SplashActivity">
+        <activity android:name=".mvp.view.activity.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
 
 
         </activity>
+
+
+
     </application>
 
 </manifest>

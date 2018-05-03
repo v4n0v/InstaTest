@@ -8,5 +8,6 @@ import com.arellomobile.mvp.MvpView;
 
 public interface FavoritesView extends MvpView {
     void init();
+    void toast(String msg);
     void updateRecycler();
 }

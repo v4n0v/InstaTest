@@ -14,34 +14,28 @@ import com.example.v4n0v.instatest.mvp.model.repo.InstagramRepo;
 import com.example.v4n0v.instatest.mvp.model.repo.cache.IFavoritesCache;
 import com.example.v4n0v.instatest.mvp.model.repo.cache.PaperFavoritesCache;
 import com.example.v4n0v.instatest.mvp.view.MainView;
-import com.example.v4n0v.instatest.mvp.view.fragments.Photo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.paperdb.Paper;
 import io.reactivex.Scheduler;
-import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 
 @InjectViewState
 public class FeedPresenter extends MvpPresenter<MainView> {
     private final String TOKEN = "265526058.3228490.4357f56a65514c0692e3171a6fc54cba";
     private final Scheduler scheduler;
-    private ArrayList<Photo> photoList;
-    private AppOkHandler handler;
     private Instagram instagram;
-    private ImagesModel model;
 
     @Inject
     InstagramRepo repo;
 
     public FeedPresenter(Scheduler scheduler) {
         this.scheduler = scheduler;
-        model=new ImagesModel();
-        handler = new AppOkHandler();
+
     }
 
     private IFavoritesCache favoritesCache = new PaperFavoritesCache();
@@ -70,10 +64,12 @@ public class FeedPresenter extends MvpPresenter<MainView> {
         public void selectItem(int pos) {
             if (items.get(pos).isFavorite()) {
                 items.get(pos).setFavorite(false);
-               favoritesCache.removeFromFavorives(items.get(pos));
+                favoritesCache.removeFromFavorives(items.get(pos));
+                getViewState().toast("Удалено из избранного");
             }else {
                 items.get(pos).setFavorite(true);
-               favoritesCache.writeToFavorives(items.get(pos));
+                favoritesCache.writeToFavorives(items.get(pos));
+                getViewState().toast("Добавлено в избранное");
             }
             getViewState().updateRecycler();
 
@@ -94,34 +90,27 @@ public class FeedPresenter extends MvpPresenter<MainView> {
                 .observeOn(scheduler)
                 .subscribe(inst -> {
                     this.instagram = inst;
+
+                    // берем список фаворитов из базы, сравниваем с полученным, при совпадении ставим метку
+                    List<Datum> favorites = Paper.book("favorites").read("all");
+                    for (Datum data: inst.getData()){
+                        for (Datum favorite:favorites){
+                            if (data.getId().equals(favorite.getId())){
+                                data.setFavorite(true);
+                            }
+                        }
+                    }
+
+                    // обновляем вью
                     getViewState().fillUserInfo(inst.getData().get(0).getUser().getUsername());
                     getViewState().loadAvatar(inst.getData().get(0).getUser().getProfilePicture());
-//                    model.saveImages(inst)
-//                           .subscribe(boo -> {
-//                                Timber.d("Image extracting complete");
-//
-//                            });
 
                     listPresenter.items= this.instagram .getData();
                     getViewState().updateRecycler();
 
                 });
 
-//        handler.getSelf().subscribeOn(Schedulers.io())
-//                .observeOn(scheduler)
-//                .subscribe(answer->{
-//
-//                    Instagram inst = gson.fromJson(answer, Instagram.class);
-//                    steUserInfo(inst.getData().get(0).getUser().getUsername());
-//                    String avaLink = inst.getData().get(0).getUser().getProfilePicture();
-//                 //   Timber.d(answer);
-//                    Timber.d(avaLink);
-//                });
-
 
     }
 
-    private void steUserInfo(String username) {
-        getViewState().fillUserInfo(username);
-    }
 }

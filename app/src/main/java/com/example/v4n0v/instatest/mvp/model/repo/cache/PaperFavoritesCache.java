@@ -16,11 +16,23 @@ public class PaperFavoritesCache implements IFavoritesCache {
 
     @Override
     public void writeToFavorives(Datum data) {
+
         readFromFavorites()
                 .subscribeOn(Schedulers.io())
                 .subscribe(favorites->{
-                   favorites.add(data);
-                   Paper.book("favorites").write("all", favorites);
+                    // проверяем был ли ранее добавлен элемент
+                    boolean isWritten = false;
+                    for (int i = 0; i < favorites.size(); i++) {
+                        if (data.getId().equals(favorites.get(i).getId())){
+                            isWritten=true;
+                            continue;
+                        }
+                    }
+                    // если нет, добавляем и пишем в базу
+                    if(!isWritten) {
+                        favorites.add(data);
+                    }
+                    Paper.book("favorites").write("all", favorites);
                     Timber.d("Added to favorites");
                 });
     }
@@ -28,11 +40,13 @@ public class PaperFavoritesCache implements IFavoritesCache {
     @Override
     public void removeFromFavorives(Datum data) {
         readFromFavorites()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(favorites->{
-                    for (Datum favorite: favorites){
-                        if (data==favorite){
-                            favorites.remove(favorite);
+
+                    for (int i = 0; i < favorites.size(); i++) {
+                        if (data.getId().equals(favorites.get(i).getId())){
+                            favorites.remove(i);
                         }
                     }
                     Paper.book("favorites").write("all", favorites);

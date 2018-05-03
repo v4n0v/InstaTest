@@ -53,17 +53,6 @@ public class RealmImageCache implements ImageCache{
             realm.copyToRealm(cachedImage);
         });
 
-//        RealmImage realmImage = realm.where(RealmImage.class).equalTo("url", city).findFirst();
-//        if (realmImage != null) {
-//            realm.executeTransaction(realm1 ->
-//                    realmImage.setPath(file.getAbsolutePath())
-//            );
-//        } else {
-//            realm.executeTransaction(realm1 -> {
-//                RealmImage newRealmImage = realm.createObject(RealmImage.class, city);
-//                newRealmImage.setPath(file.getAbsolutePath());
-//            });
-//        }
         Timber.d("realm saved image: " + imageFile.getAbsolutePath());
     }
 

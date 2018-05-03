@@ -19,9 +19,9 @@ public class InstagramRepo {
     private IInstaRepoCahe cache;
     private ApiService api;
 
-    public InstagramRepo(ApiService apiService) {
+    public InstagramRepo(ApiService apiService, IInstaRepoCahe cache) {
         this.api = apiService;
-        cache = new PaperRepoCache();
+        this.cache=cache;
     }
 
     public Observable<Instagram> getData(String token) {

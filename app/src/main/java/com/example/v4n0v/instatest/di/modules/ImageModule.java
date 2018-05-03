@@ -11,16 +11,12 @@ import dagger.Module;
 import dagger.Provides;
 
 
-@Module
+@Module(includes = CacheModule.class)
 public class ImageModule {
     @Provides
-    public ImageLoader imageLoader(@Named("realm") ImageCache imageCache){
+    public ImageLoader imageLoader(@Named("realm-image") ImageCache imageCache){
         return new GlideLoader(imageCache);
     }
 
-    @Provides
-    @Named("realm")
-    ImageCache imageCache(){
-        return new RealmImageCache();
-    }
+
 }

@@ -26,6 +26,7 @@ public class GlideLoader implements ImageLoader<ImageView> {
     @Override
     public void loadInto(String url, ImageView container) {
 
+        // если изображение загружалось, берем из кеша, иначе грузим и кладем в кеш
         if (cache.loadImage(url) != null) {
             GlideApp.with(container.getContext())
                     .load(cache.loadImage(url))

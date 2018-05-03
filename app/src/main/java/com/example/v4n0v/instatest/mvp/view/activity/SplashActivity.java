@@ -1,7 +1,9 @@
-package com.example.v4n0v.instatest;
+package com.example.v4n0v.instatest.mvp.view.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.v4n0v.instatest.R;
 
 public class SplashActivity extends AppCompatActivity {
 

@@ -22,7 +22,11 @@
     <string name="instagram_secret">2b40e105b5cb489194358cec23ba842e</string>
     <string name="APP_ID">449…</string>
     <string name="callbackurl">https://vk.com/v4n0v</string>
-    <string name="swipe_up">Потяни вверх</string>
+    <string name="swipe_up">Развернуть</string>
     <string name="tap_on_me">Жми меня</string>
+    <string name="dark_theme">Темая тема</string>
+    <string name="light">Светлая</string>
+    <string name="dark">Темная</string>
+    <string name="select_theme">Выбирите тему</string>
 
 </resources>

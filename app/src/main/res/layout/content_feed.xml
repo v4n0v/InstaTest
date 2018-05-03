@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:foo="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/lil_margin">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+
+            android:id="@+id/iv_avatar"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_menu_gallery"
+            app:civ_border_color="@color/colorAccent"
+            app:civ_border_width="2dp" />
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_marginLeft="@dimen/std_margin">-->
+
+        <com.example.v4n0v.instatest.custom.TextViewPlus
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+
+            android:layout_marginLeft="@dimen/std_margin"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:textSize="16sp"
+            foo:customFont="roboto-bold.ttf"
+
+
+            />
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginRight="@dimen/lil_margin"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<com.example.v4n0v.instatest.custom.TextViewPlus-->
+        <!--foo:customFont="roboto-bold.ttf"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="публикаций" />-->
+
+        <!--<com.example.v4n0v.instatest.custom.TextViewPlus-->
+        <!--android:id="@+id/tv_posts"-->
+        <!--foo:customFont="roboto.ttf"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="234" />-->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginRight="@dimen/lil_margin"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<com.example.v4n0v.instatest.custom.TextViewPlus-->
+
+        <!--foo:customFont="roboto-bold.ttf"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="подписчиков" />-->
+
+        <!--<com.example.v4n0v.instatest.custom.TextViewPlus-->
+        <!--android:id="@+id/tv_subscribers"-->
+        <!--foo:customFont="roboto.ttf"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="2344" />-->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginRight="@dimen/lil_margin"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<com.example.v4n0v.instatest.custom.TextViewPlus-->
+        <!--foo:customFont="roboto-bold.ttf"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="подписки" />-->
+
+        <!--<com.example.v4n0v.instatest.custom.TextViewPlus-->
+        <!--android:id="@+id/tv_subscribes"-->
+        <!--foo:customFont="roboto.ttf"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="54" />-->
+        <!--</LinearLayout>-->
+        <!--</LinearLayout>-->
+
+
+        <!--</LinearLayout>-->
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:src="@drawable/border" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_feed"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+</LinearLayout>

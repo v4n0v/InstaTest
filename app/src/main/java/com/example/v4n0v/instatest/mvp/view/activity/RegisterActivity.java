@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.v4n0v.instatest.R;
 
@@ -21,6 +22,6 @@ public class RegisterActivity extends AppCompatActivity {
     public void confirmRegistration(View view) {
         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
         startActivity(intent);
-
+        Toast.makeText(getApplicationContext(), "Регистрация невозможна", Toast.LENGTH_SHORT).show();
     }
 }
