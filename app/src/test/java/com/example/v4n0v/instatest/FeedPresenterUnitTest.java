@@ -72,45 +72,31 @@ public class FeedPresenterUnitTest {
     }
 
 
-
+    // тест работы InstagramRepo
     @Test
     public void instagramRepoTest(){
+        String TOKEN = "265526058.3228490.4357f56a65514c0692e3171a6fc54cba";
+
+        Instagram instagram = new Instagram();
+        instagram.setData(new ArrayList<>());
+        Datum datum = new Datum();
+        User user = new User();
+        user.setProfilePicture(null);
+        user.setUsername("v4n0v");
+        datum.setUser(user);
+        instagram.getData().add(datum);
 
         TestComponent testComponent = DaggerTestComponent.builder().instaRepoTestModule(new InstaRepoTestModule(){
             @Override
             public InstagramRepo instagramRepo() {
                 InstagramRepo repo = super.instagramRepo();
-                String TOKEN = "265526058.3228490.4357f56a65514c0692e3171a6fc54cba";
-
-                Instagram instagram = new Instagram();
-                instagram.setData(new ArrayList<>());
-                Datum datum = new Datum();
-                datum.setId("111000111");
-
-                User user = new User();
-                user.setProfilePicture(null);
-//                user.setProfilePicture("https://scontent.cdninstagram.com/vp/2da02b56c59539339fd164f29c578791/5B9AC619/t51.2885-15/s640x640/sh0.08/e35/26867623_1494527720645806_1885776301218856960_n.jpg");
-                user.setUsername("v4n0v");
-                datum.setUser(user);
-                instagram.getData().add(datum);
-//                datum.setCaption(new Caption());
-//                datum.setLikes(new Likes());
-//                datum.setComments(new Comments());
-//                Images images = new Images();
-//                StandardResolution resolution = new StandardResolution();
-//                resolution.setUrl("picture");
-//                images.setStandardResolution(resolution);
-//                images.setStandardResolution(resolution);
-//                datum.setImages(images);
-
                 Mockito.when(repo.getData(TOKEN)).thenReturn(Observable.just(instagram));
-
                 return repo;
             }
         }).build();
         testComponent.inject(feedPresenter);
 
-
+        feedPresenter.attachView(mainView);
         feedPresenter.getImages();
         testScheduler.advanceTimeBy(1 , TimeUnit.SECONDS);
 
