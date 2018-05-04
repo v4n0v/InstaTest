@@ -70,11 +70,17 @@ public class FavoritesPresenter extends MvpPresenter<FavoritesView> {
         public void selectItem(int pos) {
             if (items.get(pos).isFavorite()) {
                 items.get(pos).setFavorite(false);
-                favoritesCache.removeFromFavorives(items.get(pos));
-                items.remove(pos);
-                getViewState().toast("Удалено из избранного");
+                favoritesCache.removeFromFavorites(items.get(pos));
+                favoritesCache.removeFromFavorites(items.get(pos))
+                        .observeOn(scheduler)
+                        .subscribe(complete-> {
+                            items.remove(pos);
+                            getViewState().toast("Удалено из избранного");
+                            getViewState().updateRecycler();
+                        });
+
             }
-            getViewState().updateRecycler();
+
         }
     }
 

@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.example.v4n0v.instatest.mvp.model.ImagesModel;
-import com.example.v4n0v.instatest.mvp.model.api.okhttp.AppOkHandler;
 import com.example.v4n0v.instatest.mvp.model.entity.json.Datum;
 import com.example.v4n0v.instatest.mvp.model.entity.json.Instagram;
 import com.example.v4n0v.instatest.mvp.model.recycler_adapter.IListImageRaw;
@@ -20,7 +18,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.paperdb.Paper;
 import io.reactivex.Scheduler;
 
 
@@ -59,20 +56,27 @@ public class FeedPresenter extends MvpPresenter<MainView> {
         public int getViewCount() {
             return items.size();
         }
-
+        // при добавлении в фавориты:
         @Override
         public void selectItem(int pos) {
             if (items.get(pos).isFavorite()) {
                 items.get(pos).setFavorite(false);
-                favoritesCache.removeFromFavorives(items.get(pos));
-                getViewState().toast("Удалено из избранного");
+                favoritesCache.removeFromFavorites(items.get(pos))
+                        .observeOn(scheduler)
+                        .subscribe(complete-> {
+                            getViewState().toast("Удалено из избранного");
+                            getViewState().updateRecycler();
+                        });
+
             }else {
                 items.get(pos).setFavorite(true);
-                favoritesCache.writeToFavorives(items.get(pos));
-                getViewState().toast("Добавлено в избранное");
+                favoritesCache.writeToFavorites(items.get(pos))
+                        .observeOn(scheduler)
+                        .subscribe(complete->{
+                            getViewState().toast("Добавлено в избранное");
+                            getViewState().updateRecycler();
+                        });
             }
-            getViewState().updateRecycler();
-
         }
     }
 
@@ -89,28 +93,17 @@ public class FeedPresenter extends MvpPresenter<MainView> {
         repo.getData(TOKEN)
                 .observeOn(scheduler)
                 .subscribe(inst -> {
-                    this.instagram = inst;
-
-                    // берем список фаворитов из базы, сравниваем с полученным, при совпадении ставим метку
-                    List<Datum> favorites = Paper.book("favorites").read("all");
-                    for (Datum data: inst.getData()){
-                        for (Datum favorite:favorites){
-                            if (data.getId().equals(favorite.getId())){
-                                data.setFavorite(true);
-                            }
-                        }
-                    }
-
-                    // обновляем вью
-                    getViewState().fillUserInfo(inst.getData().get(0).getUser().getUsername());
-                    getViewState().loadAvatar(inst.getData().get(0).getUser().getProfilePicture());
-
-                    listPresenter.items= this.instagram .getData();
-                    getViewState().updateRecycler();
-
+                    favoritesCache.verifyFavorites(inst)
+                            .observeOn(scheduler)
+                            .subscribe(newInst->{
+                              this.instagram=newInst;
+                                // обновляем вью
+                                getViewState().fillUserInfo(inst.getData().get(0).getUser().getUsername());
+                                getViewState().loadAvatar(inst.getData().get(0).getUser().getProfilePicture());
+                                listPresenter.items= this.instagram .getData();
+                                getViewState().updateRecycler();
+                            });
                 });
-
-
     }
 
 }

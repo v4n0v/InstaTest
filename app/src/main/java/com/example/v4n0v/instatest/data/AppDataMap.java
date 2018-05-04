@@ -3,7 +3,7 @@ package com.example.v4n0v.instatest.data;
 import com.example.v4n0v.instatest.R;
 
 /**
- * Created by v4n0v on 16.03.18.
+ * Внутренние строковые ресурсы
  */
 
 public class AppDataMap {

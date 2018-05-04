@@ -87,9 +87,9 @@ public class FeedPresenterUnitTest {
                 Datum datum = new Datum();
                 datum.setId("111000111");
 
-
                 User user = new User();
-                user.setProfilePicture("https://scontent.cdninstagram.com/vp/2da02b56c59539339fd164f29c578791/5B9AC619/t51.2885-15/s640x640/sh0.08/e35/26867623_1494527720645806_1885776301218856960_n.jpg");
+                user.setProfilePicture(null);
+//                user.setProfilePicture("https://scontent.cdninstagram.com/vp/2da02b56c59539339fd164f29c578791/5B9AC619/t51.2885-15/s640x640/sh0.08/e35/26867623_1494527720645806_1885776301218856960_n.jpg");
                 user.setUsername("v4n0v");
                 datum.setUser(user);
                 instagram.getData().add(datum);

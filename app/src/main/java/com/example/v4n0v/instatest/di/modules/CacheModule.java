@@ -2,8 +2,8 @@ package com.example.v4n0v.instatest.di.modules;
 
 import com.example.v4n0v.instatest.images.ImageCache;
 import com.example.v4n0v.instatest.images.RealmImageCache;
-import com.example.v4n0v.instatest.mvp.model.repo.cache.IInstaRepoCahe;
-import com.example.v4n0v.instatest.mvp.model.repo.cache.PaperRepoCache;
+import com.example.v4n0v.instatest.mvp.model.repo.cache.IInstagramRepoCahe;
+import com.example.v4n0v.instatest.mvp.model.repo.cache.PaperInstagramRepoCache;
 
 import javax.inject.Named;
 
@@ -19,8 +19,8 @@ public class CacheModule {
 
     @Provides
     @Named("paper-insta")
-    public IInstaRepoCahe iInstaRepoCahe(){
-        return new PaperRepoCache();
+    public IInstagramRepoCahe iInstaRepoCahe(){
+        return new PaperInstagramRepoCache();
     }
 
     @Provides

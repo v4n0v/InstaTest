@@ -6,7 +6,7 @@ import io.reactivex.Observable;
 import timber.log.Timber;
 
 
-public class PaperRepoCache implements IInstaRepoCahe {
+public class PaperInstagramRepoCache implements IInstagramRepoCahe {
     @Override
     public void saveData(Instagram instagram) {
         Timber.d("saveData on paper");
