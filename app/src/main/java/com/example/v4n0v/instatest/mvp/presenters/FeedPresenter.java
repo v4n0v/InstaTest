@@ -93,13 +93,14 @@ public class FeedPresenter extends MvpPresenter<MainView> {
         repo.getData(TOKEN)
                 .observeOn(scheduler)
                 .subscribe(inst -> {
+                    // обновляем данные пользователя
+                    getViewState().fillUserInfo(inst.getData().get(0).getUser().getUsername());
+                    getViewState().loadAvatar(inst.getData().get(0).getUser().getProfilePicture());
                     favoritesCache.verifyFavorites(inst)
                             .observeOn(scheduler)
                             .subscribe(newInst->{
                               this.instagram=newInst;
-                                // обновляем вью
-                                getViewState().fillUserInfo(inst.getData().get(0).getUser().getUsername());
-                                getViewState().loadAvatar(inst.getData().get(0).getUser().getProfilePicture());
+                                // обновляем фотки
                                 listPresenter.items= this.instagram .getData();
                                 getViewState().updateRecycler();
                             });
