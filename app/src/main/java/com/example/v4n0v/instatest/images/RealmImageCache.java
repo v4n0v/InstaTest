@@ -23,7 +23,7 @@ public class RealmImageCache implements ImageCache{
     private  final String IMAGE_FOLDER_NAME = "image";
 
     @Override
-    public void saveImage(String url, Bitmap bitmap) {
+    public File saveImage(String url, Bitmap bitmap) {
         if (!getImageDir().exists() && !getImageDir().mkdirs())
         {
             throw new RuntimeException("Failed to create directory: " + getImageDir().toString());
@@ -54,6 +54,7 @@ public class RealmImageCache implements ImageCache{
         });
 
         Timber.d("realm saved image: " + imageFile.getAbsolutePath());
+        return imageFile;
     }
 
     @Override
@@ -68,11 +69,11 @@ public class RealmImageCache implements ImageCache{
         return null;
     }
 
-    public  File getImageDir()
+    private  File getImageDir()
     {
         return new File(App.getInstance().getExternalFilesDir(null) + "/" + IMAGE_FOLDER_NAME);
     }
-    public  String MD5(String s) {
+    private  String MD5(String s) {
         MessageDigest m = null;
 
         try {
@@ -82,7 +83,7 @@ public class RealmImageCache implements ImageCache{
         }
 
         m.update(s.getBytes(),0,s.length());
-        String hash = new BigInteger(1, m.digest()).toString(16);
-        return hash;
+
+        return  new BigInteger(1, m.digest()).toString(16);
     }
 }

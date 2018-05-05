@@ -14,6 +14,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.example.v4n0v.instatest.App;
 import com.example.v4n0v.instatest.R;
 import com.example.v4n0v.instatest.event_bus.TabSelectBus;
 import com.example.v4n0v.instatest.images.ImageLoader;
@@ -64,7 +65,7 @@ public class FragmentFavorites extends MvpAppCompatFragment implements Favorites
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_favorites, container, false);
         ButterKnife.bind(this, view);
- 
+        App.getInstance().getAppComponent().inject(presenter);
         return view;
     }
 

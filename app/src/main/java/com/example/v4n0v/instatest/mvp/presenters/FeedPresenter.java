@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import io.reactivex.Scheduler;
 
@@ -34,8 +35,10 @@ public class FeedPresenter extends MvpPresenter<MainView> {
         this.scheduler = scheduler;
 
     }
+    @Inject
+    @Named("paper-favorites")
+    IFavoritesCache favoritesCache;
 
-    private IFavoritesCache favoritesCache = new PaperFavoritesCache();
     public ListPresenter getListPresenter() {
         return listPresenter;
     }

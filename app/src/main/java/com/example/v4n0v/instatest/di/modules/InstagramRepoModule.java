@@ -13,7 +13,7 @@ import dagger.Provides;
  * Модуль репозиториев InstagramRepo
  */
 @Module(includes = {ApiModule.class, CacheModule.class})
-public class InstaRepoModule {
+public class InstagramRepoModule {
 
     @Provides
     public InstagramRepo instagramRepo(ApiService apiService, @Named("paper-insta")IInstagramRepoCahe cache){

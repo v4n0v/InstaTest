@@ -12,6 +12,9 @@ import com.example.v4n0v.instatest.mvp.view.FavoritesView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import io.reactivex.Scheduler;
 
 /**
@@ -33,7 +36,9 @@ public class FavoritesPresenter extends MvpPresenter<FavoritesView> {
         this.scheduler = scheduler;
     }
 
-    IFavoritesCache favoritesCache = new PaperFavoritesCache();
+    @Inject
+    @Named("paper-favorites")
+    IFavoritesCache favoritesCache;
 
     public void update() {
         favoritesCache.readFromFavorites()

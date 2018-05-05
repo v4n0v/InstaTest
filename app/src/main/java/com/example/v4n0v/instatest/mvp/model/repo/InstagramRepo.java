@@ -25,11 +25,11 @@ public class InstagramRepo {
             return api.getData(token)
                     .subscribeOn(Schedulers.io())
                     .map(instagram -> {
-                       // cache.saveData(instagram);
+                        cache.saveData(instagram.getData().get(0).getUser().getUsername(), instagram);
                         return instagram;
                     });
         } else {
-            return cache.loadData();
+            return cache.loadLastData();
         }
     }
 }

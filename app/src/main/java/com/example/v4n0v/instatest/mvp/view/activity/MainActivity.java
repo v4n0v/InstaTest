@@ -109,9 +109,10 @@ public class MainActivity extends AppCompatActivity
 
     private void initFragmentPA() {
         fragmentFavorites = FragmentFavorites.newInstance(null);
+        App.getInstance().getAppComponent().inject(fragmentFavorites);
         fragmentFeed = FragmentFeed.newInstance(null);
         App.getInstance().getAppComponent().inject(fragmentFeed);
-        App.getInstance().getAppComponent().inject(fragmentFavorites);
+
         customFragmentPA.addFragment(fragmentFeed, "Лента");
         customFragmentPA.addFragment(fragmentFavorites, "Избранное");
 
@@ -166,7 +167,6 @@ public class MainActivity extends AppCompatActivity
                 final Switch themeSwitch = additionView.findViewById(R.id.switch_theme);
                 if (themeSwitch.isChecked()) {
                     Toast.makeText(MainActivity.this, "Теменая тема", Toast.LENGTH_SHORT).show();
-
                     Paper.book("theme").write("theme_switch", true);
                 } else {
                     Toast.makeText(MainActivity.this, "Светлая тема", Toast.LENGTH_SHORT).show();
@@ -273,7 +273,7 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(MainActivity.this, "Отправить", LENGTH_SHORT).show();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

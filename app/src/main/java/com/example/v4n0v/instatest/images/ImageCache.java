@@ -5,10 +5,11 @@ import android.graphics.Bitmap;
 import java.io.File;
 
 /**
- * Created by v4n0v on 28.04.18.
+ * ImageCache interface
+ * методы кеширования изображений
  */
 
 public interface ImageCache {
-    void saveImage(String url,  Bitmap bitmap);
+    File saveImage(String url,  Bitmap bitmap);
     File loadImage(String url);
 }
