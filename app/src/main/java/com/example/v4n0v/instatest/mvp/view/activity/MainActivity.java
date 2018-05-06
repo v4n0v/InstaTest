@@ -1,12 +1,13 @@
 package com.example.v4n0v.instatest.mvp.view.activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,8 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -22,7 +25,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,7 +32,6 @@ import android.view.View;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.example.v4n0v.instatest.App;
 import com.example.v4n0v.instatest.R;
 import com.example.v4n0v.instatest.event_bus.TabSelectBus;
 import com.example.v4n0v.instatest.mvp.view.fragments.FragmentColor;
@@ -49,8 +50,10 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, FragmentListener, View.OnClickListener {
-    private static final String TAG = "MainActivity";
 
+    private static final int PERMISSIONS_REQUEST_ID = 0;
+
+    private static final String[] permissons = { Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE };
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -88,14 +91,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        customFragmentPA = new CustomFragmentPA(getSupportFragmentManager());
+        checkPermissions();
 
         bottomView.setOnClickListener(this);
-        initFragmentPA();
-
-        mViewPager.setAdapter(customFragmentPA);
-
-        init();
+       // initViews();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -106,19 +105,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initFragmentPA() {
+        customFragmentPA = new CustomFragmentPA(getSupportFragmentManager());
         fragmentFeed = FragmentFeed.newInstance(null);
-
-
         fragmentFavorites = FragmentFavorites.newInstance(null);
-
 
         customFragmentPA.addFragment(fragmentFeed, "Лента");
         customFragmentPA.addFragment(fragmentFavorites, "Избранное");
-
     }
 
     private void initTabs() {
-
+        mViewPager.setAdapter(customFragmentPA);
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -126,7 +122,7 @@ public class MainActivity extends AppCompatActivity
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Log.e(TAG, "onTabSelected: " + tab.getText());
+                Timber.d( "onTabSelected: " + tab.getText());
                 if (tab.getText().equals(getResources().getString(R.string.favorites))) {
                     TabSelectBus.getBus().post(0);
                     Timber.d("TabSelectBus posted 0 after tab '"+getResources().getString(R.string.favorites)+"' selected");
@@ -135,14 +131,60 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                Log.w(TAG, "onTabUnselected: " + tab.getText());
+                Timber.d(  "onTabUnselected: " + tab.getText());
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                Log.i(TAG, "onTabReselected: " + tab.getText());
+                Timber.d( "onTabReselected: " + tab.getText());
             }
         });
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_ID: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    onPermissionsGranted();
+                }
+                else
+                {
+                    new android.support.v7.app.AlertDialog.Builder(this)
+                            .setTitle(R.string.permissons_required)
+                            .setMessage(R.string.permissions_required_message)
+                            .setPositiveButton("OK", (dialog, which) -> requestPermissions())
+                            .setOnCancelListener(dialog -> requestPermissions())
+                            .create()
+                            .show();
+                }
+            }
+        }
+    }
+
+
+    private void checkPermissions()
+    {
+        for(String permission : permissons)
+        {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED)
+            {
+                requestPermissions();
+                return;
+            }
+        }
+
+        onPermissionsGranted();
+    }
+
+    private void requestPermissions()
+    {
+        ActivityCompat.requestPermissions(this, permissons, PERMISSIONS_REQUEST_ID);
+    }
+
+    private void onPermissionsGranted()
+    {
+        initViews();
     }
 
     public void showOptions() {
@@ -182,7 +224,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    private void init() {
+    private void initViews() {
 
         sheetBehavior = BottomSheetBehavior.from(bottomView);
         sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -212,6 +254,7 @@ public class MainActivity extends AppCompatActivity
                          toast("FAB click");
             }
         });
+        initFragmentPA();
         initTabs();
         applyColors();
 

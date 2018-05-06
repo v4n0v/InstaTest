@@ -73,6 +73,7 @@ public class FragmentFeed extends MvpAppCompatFragment implements MainView {
 
 //        avatarImageView.setClickable(true);
 //        avatarImageView.setOnClickListener(v -> {
+//            toast("Начинаем утекать");
 //            startTask();
 //        });
         return view;
