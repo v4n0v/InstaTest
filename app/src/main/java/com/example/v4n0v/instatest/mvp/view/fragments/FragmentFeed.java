@@ -67,8 +67,6 @@ public class FragmentFeed extends MvpAppCompatFragment implements MainView {
 
         App.getInstance().getAppComponent().inject(presenter);
         presenter.getImages();
-
-
         return view;
     }
 
@@ -78,19 +76,12 @@ public class FragmentFeed extends MvpAppCompatFragment implements MainView {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new RecyclerImagesAdapter(imageLoader, presenter.getListPresenter());
-
         recyclerView.setAdapter(adapter);
-
     }
-
-
-
 
     @Override
     public void fillUserInfo(String username) {
         usernameTextView.setText(username);
-
-
     }
 
     @Override
