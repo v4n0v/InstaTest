@@ -104,7 +104,7 @@ public class FeedPresenter extends MvpPresenter<MainView> {
                             .subscribe(newInst->{
                               this.instagram=newInst;
                                 // обновляем фотки
-                                listPresenter.items= this.instagram .getData();
+                                listPresenter.items= this.instagram.getData();
                                 getViewState().updateRecycler();
                             });
                 });

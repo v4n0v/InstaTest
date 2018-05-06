@@ -5,6 +5,7 @@ import android.app.Application;
 import com.example.v4n0v.instatest.di.AppComponent;
 import com.example.v4n0v.instatest.di.DaggerAppComponent;
 import com.example.v4n0v.instatest.di.modules.AppModule;
+import com.squareup.leakcanary.LeakCanary;
 
 import io.paperdb.Paper;
 import io.realm.Realm;
@@ -23,6 +24,10 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)){
+            return;
+        }
+        LeakCanary.install(this);
         app = this;
         Timber.plant(new Timber.DebugTree());
         Paper.init(this);

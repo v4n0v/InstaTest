@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         customFragmentPA = new CustomFragmentPA(getSupportFragmentManager());
-//
 
         bottomView.setOnClickListener(this);
         initFragmentPA();
@@ -97,7 +96,6 @@ public class MainActivity extends AppCompatActivity
         mViewPager.setAdapter(customFragmentPA);
 
         init();
-
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -108,10 +106,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initFragmentPA() {
-        fragmentFavorites = FragmentFavorites.newInstance(null);
-        App.getInstance().getAppComponent().inject(fragmentFavorites);
         fragmentFeed = FragmentFeed.newInstance(null);
-        App.getInstance().getAppComponent().inject(fragmentFeed);
+
+
+        fragmentFavorites = FragmentFavorites.newInstance(null);
+
 
         customFragmentPA.addFragment(fragmentFeed, "Лента");
         customFragmentPA.addFragment(fragmentFavorites, "Избранное");
@@ -185,10 +184,8 @@ public class MainActivity extends AppCompatActivity
 
     private void init() {
 
-//
         sheetBehavior = BottomSheetBehavior.from(bottomView);
         sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
 
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -288,19 +285,10 @@ public class MainActivity extends AppCompatActivity
         sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
-
-    void fillFragment(android.support.v4.app.Fragment fragment) {
-        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container_frame, fragment);
-        transaction.commit();
-
-    }
-
     void applyColors() {
-//        sharedPreferences = getSharedPreferences(AppDataMap.APP_PREFERENCES, Context.MODE_PRIVATE);
+
         boolean isDarkTheme = Paper.book("theme").read("theme_switch", false);
-//
-//
+
         int colorIntText;
         int colorBG;
         int colorGroupText;
@@ -326,22 +314,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
-//    void hideElementsUI() {
-//        sheetBehavior.setHideable(true);
-//        sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-//
-//      //  fab.setVisibility(View.INVISIBLE);
-////       bottomIco.setVisibility(View.INVISIBLE);
-//    }
-//
-//    void showElementsUI() {
-//        sheetBehavior.setHideable(false);
-//        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-//
-//    //    fab.setVisibility(View.VISIBLE);
-//        //      bottomIco.setVisibility(View.VISIBLE);
-//    }
 
     @Override
     public void onFragmentElementClick() {

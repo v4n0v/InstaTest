@@ -18,6 +18,7 @@ import timber.log.Timber;
 
 
 public class RecyclerImagesAdapter extends RecyclerView.Adapter<RecyclerImagesAdapter.ViewHolder> {
+
     public RecyclerImagesAdapter(ImageLoader imageLoader, IListPresenter presenter) {
         this.presenter = presenter;
         this.imgeLoader = imageLoader;

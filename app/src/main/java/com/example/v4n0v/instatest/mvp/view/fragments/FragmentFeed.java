@@ -1,6 +1,9 @@
 package com.example.v4n0v.instatest.mvp.view.fragments;
 
+import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +37,7 @@ public class FragmentFeed extends MvpAppCompatFragment implements MainView {
 
     @BindView(R.id.iv_avatar)
     ImageView avatarImageView;
+
     @BindView(R.id.tv_username)
     TextView usernameTextView;
 
@@ -44,7 +48,6 @@ public class FragmentFeed extends MvpAppCompatFragment implements MainView {
     public FeedPresenter provideMainPresenter() {
         return new FeedPresenter(AndroidSchedulers.mainThread());
     }
-
 
     public static FragmentFeed newInstance(Bundle bundle) {
         FragmentFeed currentFragment = new FragmentFeed();
@@ -58,7 +61,6 @@ public class FragmentFeed extends MvpAppCompatFragment implements MainView {
     RecyclerView recyclerView;
     private RecyclerImagesAdapter adapter;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,7 +68,13 @@ public class FragmentFeed extends MvpAppCompatFragment implements MainView {
         ButterKnife.bind(this, view);
 
         App.getInstance().getAppComponent().inject(presenter);
+        App.getInstance().getAppComponent().inject(this);
         presenter.getImages();
+
+//        avatarImageView.setClickable(true);
+//        avatarImageView.setOnClickListener(v -> {
+//            startTask();
+//        });
         return view;
     }
 
@@ -98,4 +106,19 @@ public class FragmentFeed extends MvpAppCompatFragment implements MainView {
     public void toast(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
+
+
+    @SuppressLint("StaticFieldLeak")
+    void startTask(){
+        new AsyncTask<Void,Void,Void>(){
+            @Override
+            protected Void doInBackground(Void... voids)
+            {
+                SystemClock.sleep(30000);
+                return null;
+            }
+        }.execute();
+    }
+
+
 }

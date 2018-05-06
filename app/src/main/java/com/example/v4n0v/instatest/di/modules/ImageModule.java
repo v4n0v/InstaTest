@@ -6,11 +6,12 @@ import com.example.v4n0v.instatest.images.ImageLoader;
 import com.example.v4n0v.instatest.images.RealmImageCache;
 
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 
-
+@Singleton
 @Module(includes = CacheModule.class)
 public class ImageModule {
     @Provides

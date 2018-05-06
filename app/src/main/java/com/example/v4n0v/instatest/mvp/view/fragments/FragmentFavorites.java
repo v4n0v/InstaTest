@@ -66,6 +66,7 @@ public class FragmentFavorites extends MvpAppCompatFragment implements Favorites
         View view= inflater.inflate(R.layout.fragment_favorites, container, false);
         ButterKnife.bind(this, view);
         App.getInstance().getAppComponent().inject(presenter);
+        App.getInstance().getAppComponent().inject(this);
         return view;
     }
 
